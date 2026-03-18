@@ -1,0 +1,8 @@
+from pymongo import MongoClient
+client = MongoClient('mongodb://localhost:27017/')
+db = client['maanglo']
+db.users.delete_many({})
+db.requests.delete_many({})
+db.offers.delete_many({})
+db.chats.delete_many({})
+print("Database cleared completely!")

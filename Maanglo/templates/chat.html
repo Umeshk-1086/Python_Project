@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Chat — Maanglo{% endblock %}
+
+{% block content %}
+<div class="dashboard-page">
+
+    <div class="dashboard-header">
+        <div>
+            <h1 class="dashboard-title">Chat</h1>
+            <p class="dashboard-sub">
+                {% if is_buyer %}
+                    You are chatting with seller <strong>{{ offer.seller_name }}</strong>
+                {% else %}
+                    You are chatting with buyer <strong>{{ buy_request.buyer_name }}</strong>
+                {% endif %}
+            </p>
+        </div>
+        <a href="/dashboard" class="btn btn-outline">← Back to Dashboard</a>
+    </div>
+
+    <div class="chat-wrapper">
+
+        <div class="chat-request-preview">
+            <span class="request-category">{{ buy_request.category }}</span>
+            <span class="chat-preview-title">{{ buy_request.title }}</span>
+            <span class="meta-item">💰 ₹{{ offer.price }}</span>
+            <span class="meta-item">🚚 {{ offer.delivery }}</span>
+        </div>
+
+        <div class="chat-box" id="chat-box">
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="chat-message {% if msg.sender_id == session.get('user_id') %}chat-mine{% else %}chat-theirs{% endif %}">
+                    <div class="chat-bubble">{{ msg.message }}</div>
+                    <div class="chat-meta">
+                        {{ msg.sender_name }} &middot; {{ msg.created_at.strftime('%d %b, %H:%M') }}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="chat-empty">
+                    <p>No messages yet. Say hello! 👋</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <form class="chat-form" method="POST" action="/chat/{{ offer._id }}">
+            <input
+                class="chat-input"
+                type="text"
+                name="message"
+                placeholder="Type your message..."
+                autocomplete="off"
+                required
+            >
+            <button type="submit" class="btn btn-primary">Send →</button>
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+    const chatBox = document.getElementById('chat-box');
+    chatBox.scrollTop = chatBox.scrollHeight;
+</script>
+{% endblock %}

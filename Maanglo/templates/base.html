@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Maanglo{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">Maanglo<span class="logo-dot">.</span></a>
+        <div class="nav-links">
+            <a href="#how-it-works">How it works</a>
+            {% if session.get('user_id') %}
+                <span class="nav-username">👋 {{ session.get('username') }}</span>
+                <a href="/logout" class="btn btn-ghost">Logout</a>
+            {% else %}
+                <a href="/login" class="btn btn-ghost">Login</a>
+                <a href="/register" class="btn btn-primary">Get Started</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Maanglo &mdash; Demand first. Supply follows.</p>
+    </footer>
+
+</body>
+</html>

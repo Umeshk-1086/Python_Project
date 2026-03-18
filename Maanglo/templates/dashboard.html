@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — Maanglo{% endblock %}
+
+{% block content %}
+<div class="dashboard-page">
+
+    <div class="dashboard-header">
+        <div>
+            <h1 class="dashboard-title">
+                {% if role == 'buyer' %}My Requests{% else %}Browse Requests{% endif %}
+            </h1>
+            <p class="dashboard-sub">
+                {% if role == 'buyer' %}
+                    Manage your posted needs and view offers from sellers.
+                {% else %}
+                    Find open buyer requests and submit your best offer.
+                {% endif %}
+            </p>
+        </div>
+        {% if role == 'buyer' %}
+            <a href="/post-need" class="btn btn-primary">+ Post a Need</a>
+        {% endif %}
+    </div>
+
+    {% if requests %}
+        <div class="requests-grid">
+            {% for r in requests %}
+            <div class="request-card">
+                <div class="request-card-top">
+                    <span class="request-category">{{ r.category }}</span>
+                    <span class="request-status status-{{ r.status }}">{{ r.status }}</span>
+                </div>
+                <h3 class="request-title">{{ r.title }}</h3>
+                <p class="request-desc">{{ r.description }}</p>
+                <div class="request-meta">
+                    <span class="meta-item">💰 ₹{{ r.budget }}</span>
+                    <span class="meta-item">📍 {{ r.location }}</span>
+                    <span class="meta-item">🕐 {{ r.created_at.strftime('%d %b %Y') }}</span>
+                </div>
+                <div class="request-footer">
+                    <span class="offer-count">{{ r.offer_count }} offer{{ 's' if r.offer_count != 1 }}</span>
+                    {% if role == 'seller' %}
+                        {% if r.already_offered %}
+                            <a href="/chat/{{ r.my_offer_id }}" class="btn btn-primary">💬 Chat →</a>
+                        {% else %}
+                            <a href="/make-offer/{{ r._id }}" class="btn btn-primary">Make Offer →</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="/view-offers/{{ r._id }}" class="btn btn-outline">View Offers →</a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <div class="empty-state">
+            {% if role == 'buyer' %}
+                <div class="empty-icon">📦</div>
+                <h3>No requests yet</h3>
+                <p>Post your first need and let sellers come to you.</p>
+                <a href="/post-need" class="btn btn-primary btn-lg">Post a Need →</a>
+            {% else %}
+                <div class="empty-icon">🔍</div>
+                <h3>No open requests</h3>
+                <p>Check back soon — buyers are posting new needs every day.</p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

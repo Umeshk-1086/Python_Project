@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Maanglo — Tell us what you need{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="hero-badge">Reverse E-Commerce</div>
+    <h1 class="hero-title">
+        You tell us<br>
+        <span class="hero-accent">what you need.</span>
+    </h1>
+    <p class="hero-subtitle">
+        Post your requirement. Verified sellers compete to offer you the best deal.
+        No more searching — let the market come to you.
+    </p>
+    <div class="hero-cta">
+        <a href="/register?role=buyer" class="btn btn-primary btn-lg">Post a Need →</a>
+        <a href="/register?role=seller" class="btn btn-outline btn-lg">Sell on Maanglo</a>
+    </div>
+    <div class="hero-stats">
+        <div class="stat"><span class="stat-num">0</span><span class="stat-label">Active Requests</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">0</span><span class="stat-label">Sellers Ready</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><span class="stat-num">0</span><span class="stat-label">Deals Closed</span></div>
+    </div>
+</section>
+
+<section class="how-it-works" id="how-it-works">
+    <div class="section-label">The Process</div>
+    <h2 class="section-title">How Maanglo works</h2>
+    <div class="steps">
+        <div class="step">
+            <div class="step-number">01</div>
+            <h3 class="step-title">Post your need</h3>
+            <p class="step-desc">Describe what you're looking for — product, budget, location, and timeline. It's free.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+            <div class="step-number">02</div>
+            <h3 class="step-title">Sellers respond</h3>
+            <p class="step-desc">Verified sellers browse your request and send you their best offers directly.</p>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+            <div class="step-number">03</div>
+            <h3 class="step-title">You choose</h3>
+            <p class="step-desc">Compare offers, chat with sellers, and accept the deal that works best for you.</p>
+        </div>
+    </div>
+</section>
+
+<section class="categories">
+    <div class="section-label">What people need</div>
+    <div class="pills">
+        <span class="pill">📱 Electronics</span>
+        <span class="pill">👕 Clothing</span>
+        <span class="pill">🏠 Home & Furniture</span>
+        <span class="pill">📚 Books & Education</span>
+        <span class="pill">🚲 Sports & Outdoor</span>
+        <span class="pill">🎮 Gaming</span>
+        <span class="pill">🔧 Tools & Hardware</span>
+        <span class="pill">🍳 Kitchen & Appliances</span>
+    </div>
+</section>
+
+<section class="cta-banner">
+    <h2>Ready to stop searching?</h2>
+    <p>Post your first need in under 2 minutes.</p>
+    <a href="/register?role=buyer" class="btn btn-primary btn-lg">Get Started — It's Free</a>
+</section>
+
+{% endblock %}

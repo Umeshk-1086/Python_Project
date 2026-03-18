@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Register — Maanglo{% endblock %}
+
+{% block content %}
+<div class="auth-page">
+    <div class="auth-card">
+
+        <h1 class="auth-title">Create account</h1>
+        <p class="auth-sub">Join Maanglo and start buying or selling today.</p>
+
+        <form method="POST" action="/register">
+
+            <div class="role-selector">
+                <div class="role-option">
+                    <input type="radio" name="role" id="role-buyer" value="buyer"
+                        {% if selected_role == 'buyer' %}checked{% endif %}>
+                    <label class="role-label" for="role-buyer">
+                        <span class="role-icon">🛒</span>
+                        Seller
+                        <span style="font-size:11px; color:var(--muted)">I want to sell</span>
+                    </label>
+                </div>
+                <div class="role-option">
+                    <input type="radio" name="role" id="role-seller" value="seller"
+                        {% if selected_role == 'seller' %}checked{% endif %}>
+                    <label class="role-label" for="role-seller">
+                        <span class="role-icon">🏪</span>
+                        Buyer
+                        <span style="font-size:11px; color:var(--muted)">I need something</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="username">Username</label>
+                <input class="form-input" type="text" id="username" name="username"
+                    placeholder="e.g. umesh123" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="email">Email address</label>
+                <input class="form-input" type="email" id="email" name="email"
+                    placeholder="you@example.com" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="phone">Phone number</label>
+                <input class="form-input" type="tel" id="phone" name="phone"
+                    placeholder="e.g. 9876543210" required>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label" for="password">Password</label>
+                <input class="form-input" type="password" id="password" name="password"
+                    placeholder="Min. 6 characters" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg form-btn">
+                Create Account →
+            </button>
+
+        </form>
+
+        <p class="form-footer">
+            Already have an account? <a href="/login">Login here</a>
+        </p>
+
+    </div>
+</div>
+{% endblock %}

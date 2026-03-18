@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}View Offers — Maanglo{% endblock %}
+
+{% block content %}
+<div class="dashboard-page">
+
+    <div class="dashboard-header">
+        <div>
+            <h1 class="dashboard-title">Offers Received</h1>
+            <p class="dashboard-sub">Sellers have responded to your request.</p>
+        </div>
+        <a href="/dashboard" class="btn btn-outline">← Back to Dashboard</a>
+    </div>
+
+    <div class="request-preview" style="margin-bottom: 32px;">
+        <div class="request-card-top">
+            <span class="request-category">{{ buy_request.category }}</span>
+            <span class="request-status status-{{ buy_request.status }}">{{ buy_request.status }}</span>
+        </div>
+        <h3 class="request-title" style="margin-top: 10px;">{{ buy_request.title }}</h3>
+        <p class="request-desc" style="margin-top: 6px;">{{ buy_request.description }}</p>
+        <div class="request-meta" style="margin-top: 10px;">
+            <span class="meta-item">💰 Budget: ₹{{ buy_request.budget }}</span>
+            <span class="meta-item">📍 {{ buy_request.location }}</span>
+        </div>
+    </div>
+
+    {% if offers %}
+        <div class="requests-grid">
+            {% for offer in offers %}
+            <div class="request-card {% if offer.status == 'accepted' %}card-accepted{% elif offer.status == 'rejected' %}card-rejected{% endif %}">
+                <div class="request-card-top">
+                    <span class="offer-seller">🏪 {{ offer.seller_name }}</span>
+                    <span class="request-status status-{{ offer.status }}">{{ offer.status }}</span>
+                </div>
+                <h3 class="request-title">₹{{ offer.price }}</h3>
+                <p class="request-desc">{{ offer.description }}</p>
+                <div class="request-meta">
+                    <span class="meta-item">🚚 {{ offer.delivery }}</span>
+                    <span class="meta-item">🕐 {{ offer.created_at.strftime('%d %b %Y') }}</span>
+                </div>
+                <div class="request-footer">
+                    <a href="/chat/{{ offer._id }}" class="btn btn-outline">💬 Chat</a>
+                    {% if buy_request.status == 'open' and offer.status == 'pending' %}
+                        <form method="POST" action="/accept-offer/{{ offer._id }}">
+                            <button type="submit" class="btn btn-primary">✅ Accept Offer</button>
+                        </form>
+                    {% elif offer.status == 'accepted' %}
+                        <span class="accepted-badge">🎉 Accepted</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">📭</div>
+            <h3>No offers yet</h3>
+            <p>Sellers haven't responded yet. Check back soon!</p>
+            <a href="/dashboard" class="btn btn-primary btn-lg">Back to Dashboard</a>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
